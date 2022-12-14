@@ -1,16 +1,17 @@
-pipline {
-   agent any
-     stages {
-       stage ('git clone') {
-             git branch: 'main', url: 'https://github.com/udayjy/javacaluclator.git'
-             }
-        }     
-    }   
-       stage("build & SonarQube analysis") {
-            agent any
+pipeline {
+    agent any
+    environment{
+        PATH = "/opt/maven3.8/bin:$PATH"
+    }
+    stages {
+        stage('git') {
             steps {
-              withSonarQubeEnv('sonar369') {
-                sh 'mvn clean package sonar:sonar'
-              }
-          }
-      }
+                git branch: 'main', url: 'https://github.com/udayjy/javacaluclator.git'
+            }
+        }
+        stage('code build') {
+            steps {
+                sh "mvn clean install"
+            }
+        }
+
