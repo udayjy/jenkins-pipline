@@ -9,9 +9,5 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/udayjy/javacaluclator.git'
             }
         }
-        stage('code build') {
-            steps {
-                sh "mvn clean install"
-            }
-        }
-
+     }
+}
