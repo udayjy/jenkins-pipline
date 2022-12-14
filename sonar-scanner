@@ -1,0 +1,16 @@
+pipline {
+   agent any
+     stages {
+       stage ('git clone') {
+             git branch: 'main', url: 'https://github.com/udayjy/javacaluclator.git'
+             }
+        }     
+    }   
+       stage("build & SonarQube analysis") {
+            agent any
+            steps {
+              withSonarQubeEnv('sonar369') {
+                sh 'mvn clean package sonar:sonar'
+              }
+          }
+      }
